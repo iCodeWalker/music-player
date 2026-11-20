@@ -1,9 +1,27 @@
 import { Stack } from "expo-router";
+import { StatusBar } from "react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
-export default function RootLayout() {
+const RootNavigation = () => {
   return (
     <Stack>
-      <Stack.Screen name="index" options={{ title: "Music Player" }} />
+      <Stack.Screen
+        name="(tabs)"
+        options={{
+          headerShown: false,
+        }}
+      />
     </Stack>
   );
-}
+};
+
+const App = () => {
+  return (
+    <SafeAreaProvider>
+      <StatusBar />
+      <RootNavigation />
+    </SafeAreaProvider>
+  );
+};
+
+export default App;
