@@ -41,7 +41,8 @@
             "cmakeVersion": "3.31.6"
           }
         }
-      ]
+      ],
+      "react-native-fast-image"
     ],
     "experiments": {
       "typedRoutes": true,

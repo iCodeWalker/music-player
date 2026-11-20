@@ -1,5 +1,6 @@
 import { Stack } from "expo-router";
 import { StatusBar } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 const RootNavigation = () => {
@@ -18,8 +19,10 @@ const RootNavigation = () => {
 const App = () => {
   return (
     <SafeAreaProvider>
-      <StatusBar />
-      <RootNavigation />
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <StatusBar />
+        <RootNavigation />
+      </GestureHandlerRootView>
     </SafeAreaProvider>
   );
 };
