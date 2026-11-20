@@ -1,13 +1,11 @@
 import { screenPadding } from "@/constants/token";
 import { utilsStyles } from "@/styles";
+import { MediaItem } from "@rntp/player";
 import { FlatList, FlatListProps, View } from "react-native";
-import library from "../../assets/data/library.json";
 import TrackListItem from "./TrackListItem";
 
-export type TrackListProps = Partial<
-  FlatListProps<(typeof library)[number]>
-> & {
-  tracks: any[];
+export type TrackListProps = Partial<FlatListProps<MediaItem>> & {
+  tracks: MediaItem[];
 };
 
 const ItemDivider = () => (
@@ -25,6 +23,9 @@ const TrackList = ({
   contentContainerStyle,
   ...flatlistProps
 }: TrackListProps) => {
+  const handleTrackSelect = (track: MediaItem) => {
+    console.log(track);
+  };
   return (
     <FlatList
       data={tracks}
@@ -40,12 +41,7 @@ const TrackList = ({
       contentInsetAdjustmentBehavior="automatic"
       ItemSeparatorComponent={ItemDivider}
       renderItem={({ item: track }) => (
-        <TrackListItem
-          track={{
-            ...track,
-            image: track.artwork,
-          }}
-        />
+        <TrackListItem track={track} onTrackSelect={handleTrackSelect} />
       )}
       {...flatlistProps}
     />

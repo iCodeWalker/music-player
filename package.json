@@ -5,6 +5,7 @@
   "dependencies": {
     "@expo/ui": "~58.0.29",
     "@expo/vector-icons": "^15.0.2",
+    "@rntp/player": "^5.13.0",
     "expo": "~58.0.26",
     "expo-blur": "~58.0.6",
     "expo-build-properties": "~58.0.12",
