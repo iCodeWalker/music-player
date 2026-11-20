@@ -1,7 +1,9 @@
+import { unknownTrackImageSource } from "@/constants/image";
 import { screenPadding } from "@/constants/token";
 import { utilsStyles } from "@/styles";
-import { MediaItem } from "@rntp/player";
-import { FlatList, FlatListProps, View } from "react-native";
+import TrackPlayer, { MediaItem } from "@rntp/player";
+import { FlatList, FlatListProps, Text, View } from "react-native";
+import FastImage from "react-native-fast-image";
 import TrackListItem from "./TrackListItem";
 
 export type TrackListProps = Partial<FlatListProps<MediaItem>> & {
@@ -24,7 +26,8 @@ const TrackList = ({
   ...flatlistProps
 }: TrackListProps) => {
   const handleTrackSelect = (track: MediaItem) => {
-    console.log(track);
+    TrackPlayer.setMediaItem(track);
+    TrackPlayer.play();
   };
   return (
     <FlatList
@@ -32,7 +35,7 @@ const TrackList = ({
       contentContainerStyle={[
         {
           paddingTop: 10,
-          paddingBottom: 128,
+          paddingBottom: 200,
           paddingHorizontal: screenPadding.horizontal,
         },
         contentContainerStyle,
@@ -40,6 +43,16 @@ const TrackList = ({
       ListFooterComponent={ItemDivider}
       contentInsetAdjustmentBehavior="automatic"
       ItemSeparatorComponent={ItemDivider}
+      ListEmptyComponent={
+        <View>
+          <Text style={utilsStyles.emptyContentText}>No songs found</Text>
+
+          <FastImage
+            source={unknownTrackImageSource}
+            style={utilsStyles.emptyContentImage}
+          />
+        </View>
+      }
       renderItem={({ item: track }) => (
         <TrackListItem track={track} onTrackSelect={handleTrackSelect} />
       )}
