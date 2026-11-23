@@ -1,10 +1,11 @@
 import { unknownTrackImageSource } from "@/constants/image";
 import { colors, fontSize } from "@/constants/token";
 import { defaultStyles } from "@/styles";
-import { Entypo } from "@expo/vector-icons";
-import { MediaItem, useActiveMediaItem } from "@rntp/player";
+import { Entypo, Ionicons } from "@expo/vector-icons";
+import { MediaItem, useActiveMediaItem, useIsPlaying } from "@rntp/player";
 import { StyleSheet, Text, TouchableHighlight, View } from "react-native";
 import FastImage from "react-native-fast-image";
+import { LoaderKitView } from "react-native-loader-kit";
 
 export type TrackListItemProps = {
   track: MediaItem;
@@ -17,6 +18,7 @@ const TrackListItem = ({
 }: TrackListItemProps) => {
   const isActiveTrack = useActiveMediaItem()?.url === track?.url;
   console.log(track);
+  const playing = useIsPlaying();
   return (
     <TouchableHighlight
       activeOpacity={0.8}
@@ -36,6 +38,21 @@ const TrackListItem = ({
               opacity: isActiveTrack ? 0.6 : 1,
             }}
           />
+          {isActiveTrack &&
+            (playing ? (
+              <LoaderKitView
+                name="LineScaleParty"
+                color={colors.primary}
+                style={styles.trackPlayingIconIndicator}
+              />
+            ) : (
+              <Ionicons
+                name="play"
+                size={24}
+                color={colors.icon}
+                style={styles.trackPausedIndicator}
+              />
+            ))}
         </View>
         {/* Track title and artist section */}
         <View

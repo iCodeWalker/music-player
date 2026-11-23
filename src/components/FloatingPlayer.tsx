@@ -1,17 +1,12 @@
 import { defaultStyles } from "@/styles";
 import { useActiveMediaItem } from "@rntp/player";
 import { useRouter } from "expo-router";
-import {
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  ViewProps,
-} from "react-native";
+import { StyleSheet, TouchableOpacity, View, ViewProps } from "react-native";
 import FastImage from "react-native-fast-image";
 
 import { unknownTrackImageSource } from "@/constants/image";
 import { useLastActiveTrack } from "@/hooks/useLastActiveTrack";
+import { MovingText } from "./MovingText";
 import { PlayPauseButton, SkipToNextButton } from "./PlayerControls";
 // import { MovingText } from './MovingText'
 
@@ -46,16 +41,12 @@ export const FloatingPlayer = ({ style }: ViewProps) => {
         />
 
         <View style={styles.trackTitleContainer}>
-          <Text style={styles.trackTitle}>{displayedTrack.title}</Text>
+          <MovingText
+            style={styles.trackTitle}
+            text={displayedTrack.title ?? ""}
+            animationThreshold={25}
+          />
         </View>
-
-        {/* <View style={styles.trackTitleContainer}>
-					<MovingText
-						style={styles.trackTitle}
-						text={displayedTrack.title ?? ''}
-						animationThreshold={25}
-					/>
-				</View> */}
 
         <View style={styles.trackControlsContainer}>
           <PlayPauseButton iconSize={24} />
