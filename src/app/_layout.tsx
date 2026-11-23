@@ -17,6 +17,17 @@ const RootNavigation = () => {
           headerShown: false,
         }}
       />
+      <Stack.Screen
+        name="player"
+        options={{
+          presentation: "card",
+          gestureEnabled: true,
+          animation: "slide_from_bottom",
+          gestureDirection: "vertical",
+          animationDuration: 400,
+          headerShown: false,
+        }}
+      />
     </Stack>
   );
 };
