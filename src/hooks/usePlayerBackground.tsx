@@ -2,7 +2,10 @@ import { colors } from "@/constants/token";
 import { useEffect, useState } from "react";
 import { Platform } from "react-native";
 import { getColors } from "react-native-image-colors";
-import { AndroidImageColors, IOSImageColors } from "react-native-image-colors/build/types";
+import {
+  AndroidImageColors,
+  IOSImageColors,
+} from "react-native-image-colors/build/types";
 
 type ImageColors = IOSImageColors | AndroidImageColors | null;
 

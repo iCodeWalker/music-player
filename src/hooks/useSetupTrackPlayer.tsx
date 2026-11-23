@@ -20,6 +20,11 @@ const setupPlayer = async () => {
 
 export const useSetupTrackPlayer = ({ onLoad }: { onLoad?: () => void }) => {
   const isInitialized = useRef(false);
+  const onLoadRef = useRef(onLoad);
+
+  useEffect(() => {
+    onLoadRef.current = onLoad;
+  });
 
   useEffect(() => {
     if (isInitialized.current) return;
@@ -27,11 +32,11 @@ export const useSetupTrackPlayer = ({ onLoad }: { onLoad?: () => void }) => {
     setupPlayer()
       .then(() => {
         isInitialized.current = true;
-        onLoad?.();
+        onLoadRef.current?.();
       })
       .catch((error) => {
         isInitialized.current = false;
         console.error(error);
       });
-  }, [onLoad]);
+  }, []);
 };

@@ -1,8 +1,8 @@
 import { NativeStackNavigationOptions } from "expo-router";
+import { Platform } from "react-native";
 import { colors } from "./token";
 
 export const StackScreenWithSearchBar: NativeStackNavigationOptions = {
-  headerLargeTitle: true,
   headerStyle: {
     backgroundColor: colors.background,
   },
@@ -18,4 +18,5 @@ export const StackScreenWithSearchBar: NativeStackNavigationOptions = {
   headerTintColor: colors.text,
   headerTransparent: false,
   headerShadowVisible: false,
+  ...(Platform.OS === "ios" && { headerLargeTitle: true }),
 };

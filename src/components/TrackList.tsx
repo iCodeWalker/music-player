@@ -1,12 +1,15 @@
 import { unknownTrackImageSource } from "@/constants/image";
 import { screenPadding } from "@/constants/token";
+import { useQueue } from "@/store/queue";
 import { utilsStyles } from "@/styles";
 import TrackPlayer, { MediaItem } from "@rntp/player";
+import { useRef } from "react";
 import { FlatList, FlatListProps, Text, View } from "react-native";
 import FastImage from "react-native-fast-image";
 import TrackListItem from "./TrackListItem";
 
 export type TrackListProps = Partial<FlatListProps<MediaItem>> & {
+  queueId: string;
   tracks: MediaItem[];
 };
 
@@ -21,13 +24,51 @@ const ItemDivider = () => (
 );
 
 const TrackList = ({
+  queueId,
   tracks,
   contentContainerStyle,
   ...flatlistProps
 }: TrackListProps) => {
-  const handleTrackSelect = (track: MediaItem) => {
-    TrackPlayer.setMediaItem(track);
-    TrackPlayer.play();
+  const queueOffSet = useRef(0);
+  const { activeQueueId, setActiveQueueId } = useQueue();
+
+  const handleTrackSelect = (selectedTrack: MediaItem) => {
+    // 1st : we need to ge the track index
+    const trackIndex = tracks.findIndex(
+      (track) => track.url === selectedTrack.url,
+    );
+
+    if (trackIndex === -1) return;
+
+    const isTrackQueueChanging = queueId !== activeQueueId;
+
+    if (isTrackQueueChanging) {
+      const beforeTracks = tracks.slice(0, trackIndex);
+      const afterTracks = tracks.slice(trackIndex + 1);
+
+      TrackPlayer.clear();
+
+      // created a new queue
+      TrackPlayer.addMediaItem(selectedTrack);
+      TrackPlayer.addMediaItems(afterTracks);
+      TrackPlayer.addMediaItems(beforeTracks);
+
+      // play a current song
+      TrackPlayer.play();
+      queueOffSet.current = trackIndex;
+      setActiveQueueId(queueId);
+    } else {
+      const nextTrackIndex =
+        trackIndex - queueOffSet.current < 0
+          ? tracks?.length + trackIndex - queueOffSet.current
+          : trackIndex - queueOffSet.current;
+
+      TrackPlayer.skipToIndex(nextTrackIndex);
+      TrackPlayer.play();
+    }
+
+    // TrackPlayer.setMediaItem(track);
+    // TrackPlayer.play();
   };
   return (
     <FlatList
