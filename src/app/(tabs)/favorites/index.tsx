@@ -32,6 +32,7 @@ const FavoritesScreen = () => {
           queueId={generateTracksListId("favourites", search)}
           scrollEnabled={false}
           tracks={filteredFavouriteTracks}
+          hideQueueControls={true}
         />
       </ScrollView>
     </View>

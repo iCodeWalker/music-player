@@ -6,11 +6,13 @@ import TrackPlayer, { MediaItem } from "@rntp/player";
 import { useRef } from "react";
 import { FlatList, FlatListProps, Text, View } from "react-native";
 import FastImage from "react-native-fast-image";
+import { QueueControls } from "./QueueControls";
 import TrackListItem from "./TrackListItem";
 
 export type TrackListProps = Partial<FlatListProps<MediaItem>> & {
   queueId: string;
   tracks: MediaItem[];
+  hideQueueControls?: boolean;
 };
 
 const ItemDivider = () => (
@@ -26,6 +28,7 @@ const ItemDivider = () => (
 const TrackList = ({
   queueId,
   tracks,
+  hideQueueControls = false,
   contentContainerStyle,
   ...flatlistProps
 }: TrackListProps) => {
@@ -82,6 +85,11 @@ const TrackList = ({
         contentContainerStyle,
       ]}
       ListFooterComponent={ItemDivider}
+      ListHeaderComponent={
+        !hideQueueControls ? (
+          <QueueControls tracks={tracks} style={{ paddingBottom: 20 }} />
+        ) : undefined
+      }
       contentInsetAdjustmentBehavior="automatic"
       ItemSeparatorComponent={ItemDivider}
       ListEmptyComponent={
