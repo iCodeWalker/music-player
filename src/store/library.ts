@@ -1,4 +1,4 @@
-import { Artist, TrackWithPlaylist } from "@/helpers/types";
+import { Artist, Playlist, TrackWithPlaylist } from "@/helpers/types";
 import { MediaItem } from "@rntp/player";
 import { useMemo } from "react";
 import { create } from "zustand";
@@ -55,4 +55,32 @@ export const useArtists = () => {
   }, [] as Artist[]);
 
   return data;
+};
+
+export const usePlaylists = () => {
+  const tracks = useLibraryStore((state) => state.tracks);
+
+  const playlists = tracks.reduce((acc, track) => {
+    track?.playlist?.forEach((playlistName) => {
+      const existingPlaylist = acc.find(
+        (playlist) => playlist.name === playlistName,
+      );
+
+      if (existingPlaylist) {
+        existingPlaylist.tracks.push(track);
+      } else {
+        acc.push({
+          name: playlistName ?? "Unknown",
+          tracks: [track],
+          artworkPreview: typeof track.artworkUrl === "string" ? track.artworkUrl : "",
+        });
+      }
+    });
+
+    return acc;
+  }, [] as Playlist[]);
+
+  const addToPlaylist = useLibraryStore((state) => state.addToPlaylist);
+
+  return { playlists, addToPlaylist };
 };
