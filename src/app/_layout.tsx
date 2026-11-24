@@ -1,14 +1,17 @@
+import { colors } from "@/constants/token";
 import { useLogTrackPlayerState } from "@/hooks/useLogTrackPlayerState";
 import { useSetupTrackPlayer } from "@/hooks/useSetupTrackPlayer";
-import { SplashScreen, Stack } from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
+import { SplashScreen, Stack, useRouter } from "expo-router";
 import { useCallback } from "react";
-import { StatusBar } from "react-native";
+import { StatusBar, TouchableOpacity } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 SplashScreen.preventAutoHideAsync();
 
 const RootNavigation = () => {
+  const router = useRouter();
   return (
     <Stack>
       <Stack.Screen
@@ -26,6 +29,36 @@ const RootNavigation = () => {
           gestureDirection: "vertical",
           animationDuration: 400,
           headerShown: false,
+        }}
+      />
+
+      <Stack.Screen
+        name="(modals)/addToPlaylist"
+        options={{
+          presentation: "modal",
+          headerStyle: {
+            backgroundColor: colors.background,
+          },
+          headerTitle: "Add to playlist",
+          headerTitleStyle: {
+            color: colors.text,
+          },
+          animation: "slide_from_bottom",
+          animationDuration: 400,
+          headerLeft: () => (
+            <TouchableOpacity
+              activeOpacity={0.7}
+              onPress={() => router.back()}
+              hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+            >
+              <Ionicons
+                name="close"
+                size={24}
+                color="#fff"
+                style={{ marginRight: 20 }}
+              />
+            </TouchableOpacity>
+          ),
         }}
       />
     </Stack>

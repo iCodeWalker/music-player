@@ -14,7 +14,7 @@ const FavoritesScreen = () => {
       placeholder: "Search a song",
     },
   });
-  const favouriteTracks = useFavorites()?.favorties;
+  const favouriteTracks = useFavorites()?.favorites;
 
   const filteredFavouriteTracks = useMemo(() => {
     if (!search) return favouriteTracks;

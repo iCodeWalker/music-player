@@ -49,13 +49,13 @@ export const useFavorites = () => {
     (state) => state.toggleTrackFavorite,
   );
 
-  const favorties = useMemo(
+  const favorites = useMemo(
     () => tracks?.filter((track) => track.rating === 1),
     [tracks],
   );
 
   return {
-    favorties,
+    favorites,
     toggleTrackFavorite,
   };
 };

@@ -49,7 +49,7 @@ export const TrackShortcutsMenu = ({
       case "add-to-playlist": {
         // it opens the addToPlaylist modal
         router.push({
-          pathname: "(modals)/addToPlaylist",
+          pathname: "/(modals)/addToPlaylist",
           params: {
             trackUrl: typeof track.url === "object" ? track.url.uri : track.url,
           },

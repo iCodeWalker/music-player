@@ -9,6 +9,7 @@ const setupPlayer = async () => {
   TrackPlayer.setCommands({
     capabilities: [
       PlayerCommand.PlayPause,
+      PlayerCommand.Stop,
       PlayerCommand.Next,
       PlayerCommand.Previous,
     ],

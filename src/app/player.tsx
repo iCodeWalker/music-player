@@ -6,6 +6,7 @@ import { PlayerVolumeBar } from "@/components/PlayerVolumeBar";
 import { unknownTrackImageSource } from "@/constants/image";
 import { colors, fontSize, screenPadding } from "@/constants/token";
 import { usePlayerBackground } from "@/hooks/usePlayerBackground";
+import { useTrackPlayerFavorite } from "@/hooks/useTrackPlayerFavorite";
 import { defaultStyles, utilsStyles } from "@/styles";
 import { FontAwesome } from "@expo/vector-icons";
 import { useActiveMediaItem } from "@rntp/player";
@@ -29,7 +30,7 @@ const PlayerScreen = () => {
 
   const { top, bottom } = useSafeAreaInsets();
 
-  const isFavorite = false;
+  const { isFavorite, toggleFavorite } = useTrackPlayerFavorite();
 
   if (!track) {
     return (
@@ -39,11 +40,10 @@ const PlayerScreen = () => {
     );
   }
 
+  console.log(track, "single235423442");
+
   return (
-    <LinearGradient
-      style={{ flex: 1 }}
-      colors={gradientColors}
-    >
+    <LinearGradient style={{ flex: 1 }} colors={gradientColors}>
       <View style={styles.overlayContainer}>
         <DismissPlayerSymbol />
 
@@ -83,7 +83,7 @@ const PlayerScreen = () => {
                     size={20}
                     color={isFavorite ? colors.primary : colors.icon}
                     style={{ marginHorizontal: 14 }}
-                    // onPress={toggleFavorite}
+                    onPress={toggleFavorite}
                   />
                 </View>
                 {/* Track artist */}
