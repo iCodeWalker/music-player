@@ -6,6 +6,7 @@ import { MediaItem, useActiveMediaItem, useIsPlaying } from "@rntp/player";
 import { StyleSheet, Text, TouchableHighlight, View } from "react-native";
 import FastImage from "react-native-fast-image";
 import { LoaderKitView } from "react-native-loader-kit";
+import { TrackShortcutsMenu } from "./TrackShortcutsMenu";
 
 export type TrackListItemProps = {
   track: MediaItem;
@@ -17,7 +18,6 @@ const TrackListItem = ({
   onTrackSelect: handleTrackSelect,
 }: TrackListItemProps) => {
   const isActiveTrack = useActiveMediaItem()?.url === track?.url;
-  console.log(track);
   const playing = useIsPlaying();
   return (
     <TouchableHighlight
@@ -80,8 +80,13 @@ const TrackListItem = ({
               </Text>
             )}
           </View>
-
-          <Entypo name="dots-three-horizontal" size={18} color={colors.icon} />
+          <TrackShortcutsMenu track={track}>
+              <Entypo
+                name="dots-three-horizontal"
+                size={18}
+                color={colors.icon}
+              />
+            </TrackShortcutsMenu>
         </View>
       </View>
     </TouchableHighlight>

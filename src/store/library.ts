@@ -12,8 +12,32 @@ interface libraryState {
 
 export const useLibraryStore = create<libraryState>((set) => ({
   tracks: library,
-  toggleTrackFavorite: () => {},
-  addToPlaylist: () => {},
+  toggleTrackFavorite: (track) =>
+    set((state) => ({
+      tracks: state.tracks?.map((currentTrack) => {
+        if (currentTrack.url === track.url) {
+          return {
+            ...currentTrack,
+            rating: currentTrack?.rating === 1 ? 0 : 1,
+          };
+        } else {
+          return currentTrack;
+        }
+      }),
+    })),
+  addToPlaylist: (track, playlistName) =>
+    set((state) => ({
+      tracks: state.tracks?.map((currentTrack) => {
+        if (currentTrack.url === track.url) {
+          return {
+            ...currentTrack,
+            playlist: [...(currentTrack.playlist ?? []), playlistName],
+          };
+        }
+
+        return currentTrack;
+      }),
+    })),
 }));
 
 export const useTracks = () => useLibraryStore((state) => state.tracks);
@@ -72,7 +96,8 @@ export const usePlaylists = () => {
         acc.push({
           name: playlistName ?? "Unknown",
           tracks: [track],
-          artworkPreview: typeof track.artworkUrl === "string" ? track.artworkUrl : "",
+          artworkPreview:
+            typeof track.artworkUrl === "string" ? track.artworkUrl : "",
         });
       }
     });
