@@ -57,7 +57,7 @@ export const TrackShortcutsMenu = ({
         break;
       }
       default:
-        console.warn(`Unknown menu action ${id}`);
+        break;
     }
   };
 

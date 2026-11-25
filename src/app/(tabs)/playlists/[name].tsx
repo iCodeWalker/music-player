@@ -14,8 +14,6 @@ const PlaylistScreen = () => {
   const playlist = playlists.find((playlist) => playlist.name === playlistName);
 
   if (!playlist) {
-    console.warn(`Playlist ${playlistName} was not found!`);
-
     return <Redirect href={"/(tabs)/playlists"} />;
   }
 

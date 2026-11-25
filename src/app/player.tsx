@@ -40,8 +40,6 @@ const PlayerScreen = () => {
     );
   }
 
-  console.log(track, "single235423442");
-
   return (
     <LinearGradient style={{ flex: 1 }} colors={gradientColors}>
       <View style={styles.overlayContainer}>

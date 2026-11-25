@@ -1,5 +1,4 @@
 import { colors } from "@/constants/token";
-import { useLogTrackPlayerState } from "@/hooks/useLogTrackPlayerState";
 import { useSetupTrackPlayer } from "@/hooks/useSetupTrackPlayer";
 import { Ionicons } from "@expo/vector-icons";
 import { SplashScreen, Stack, useRouter } from "expo-router";
@@ -74,7 +73,7 @@ const App = () => {
     onLoad: handleTrackPlayerLoaded,
   });
 
-  useLogTrackPlayerState();
+  // useLogTrackPlayerState();
 
   return (
     <SafeAreaProvider>

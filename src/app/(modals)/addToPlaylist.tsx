@@ -32,8 +32,6 @@ const AddToPlaylistModal = () => {
       !playlist.tracks.some((playlistTrack) => playlistTrack.url === track.url),
   );
 
-  console.log(availablePlaylists, "availablePlaylists");
-
   const handlePlaylistPress = async (playlist: Playlist) => {
     addToPlaylist(track, playlist.name);
 
